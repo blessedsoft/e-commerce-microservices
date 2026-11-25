@@ -1,0 +1,69 @@
+services:
+  gateway:
+    build: { context: ./services/gateway, dockerfile: Dockerfile }
+    image: ${REGISTRY:-docker.io/blessedsoft}/ecommerce-gateway:${VERSION:-v1.0.0}
+    environment:
+      PORT: 3000
+      PRODUCTS_URL: http://products:3001
+      ORDERS_URL: http://orders:3002
+    ports: ["${GATEWAY_PORT:-3000}:3000"]
+    depends_on:
+      products: { condition: service_healthy }
+      orders: { condition: service_healthy }
+    networks: [app]
+    healthcheck: { test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/health"], interval: 10s, timeout: 3s, retries: 5 }
+    deploy: { resources: { limits: { cpus: '0.50', memory: 128M } } }
+
+  products:
+    build: { context: ./services/products, dockerfile: Dockerfile }
+    image: ${REGISTRY:-docker.io/blessedsoft}/ecommerce-products:${VERSION:-v1.0.0}
+    environment:
+      PORT: 3001
+      DATABASE_URL: postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-change-me}@postgres:5432/${POSTGRES_DB:-ecommerce}
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    networks: [app]
+    healthcheck: { test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3001/health"], interval: 10s, timeout: 3s, retries: 5 }
+    deploy: { resources: { limits: { cpus: '0.50', memory: 192M } } }
+
+  orders:
+    build: { context: ./services/orders, dockerfile: Dockerfile }
+    image: ${REGISTRY:-docker.io/blessedsoft}/ecommerce-orders:${VERSION:-v1.0.0}
+    environment:
+      PORT: 3002
+      DATABASE_URL: postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-change-me}@postgres:5432/${POSTGRES_DB:-ecommerce}
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    networks: [app]
+    healthcheck: { test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3002/health"], interval: 10s, timeout: 3s, retries: 5 }
+    deploy: { resources: { limits: { cpus: '0.50', memory: 192M } } }
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+      POSTGRES_DB: ${POSTGRES_DB:-ecommerce}
+    volumes: [postgres-data:/var/lib/postgresql/data]
+    networks: [app]
+    healthcheck: { test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"], interval: 10s, timeout: 5s, retries: 5 }
+    deploy: { resources: { limits: { cpus: '1.00', memory: 256M } } }
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes: [redis-data:/data]
+    networks: [app]
+    healthcheck: { test: ["CMD", "redis-cli", "ping"], interval: 10s, timeout: 3s, retries: 5 }
+    deploy: { resources: { limits: { cpus: '0.50', memory: 128M } } }
+
+networks:
+  app:
+    driver: bridge
+volumes:
+  postgres-data:
+  redis-data:

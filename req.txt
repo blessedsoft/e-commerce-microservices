@@ -1,0 +1,54 @@
+Assignment Instructions
+Assignment: Containerize & Ship a Microservices Application
+Overview
+Containerize a microservices application consisting of at least 3 services, optimize all images for production, orchestrate with Docker Compose, and push images to a container registry.
+
+Requirements
+Deliverables
+Dockerfiles for each service (minimum 3 services)
+docker-compose.yml orchestrating all services
+docker-compose.override.yml for development mode (hot reload, debug ports)
+.dockerignore files for each service
+README.md with architecture diagram, build instructions, and image size report
+Technical Requirements
+Application (choose one or build your own):
+
+Option A: E-commerce — API gateway, product service, order service, PostgreSQL, Redis
+Option B: Chat app — WebSocket server, REST API, MongoDB, Redis pub/sub
+Option C: Your own design with at least 3 application services + 1 database + 1 cache
+Docker requirements:
+
+All Dockerfiles use multi-stage builds
+All images use Alpine or distroless base
+All containers run as non-root users
+All services have HEALTHCHECK instructions
+All images are under 150 MB
+Layer caching is optimized (dependencies before source code)
+No secrets in any image layer
+Compose requirements:
+
+Health check dependencies (depends_on with condition: service_healthy)
+Named volumes for all persistent data
+Custom network with proper service isolation
+Environment variables for all configuration (no hardcoded values)
+Resource limits (CPU and memory) on all services
+Registry:
+
+Push all images to Docker Hub (or any public registry)
+Use semantic versioning tags (e.g., v1.0.0)
+Include a docker-compose.prod.yml that pulls from registry instead of building
+Bonus (optional)
+Add Nginx reverse proxy as the single entry point
+Implement graceful shutdown handling in application code
+Add a CI pipeline that builds and pushes images on git push
+Include Trivy scan results showing zero critical vulnerabilities
+Grading Rubric
+This assignment uses the Standard Module Assignment rubric (100 points):
+
+Correctness (30 pts): All services start, communicate, and function correctly
+Architecture (25 pts): Clean Dockerfiles, proper multi-stage builds, good Compose structure
+Documentation (20 pts): Clear README, architecture diagram, image size comparison table
+Security (15 pts): Non-root users, no secrets in images, health checks, scan results
+Bonus/Innovation (10 pts): CI pipeline, graceful shutdown, reverse proxy, zero CVEs
+Submission
+Submit a Git repository link with all Dockerfiles, Compose files, application code, and documentation.

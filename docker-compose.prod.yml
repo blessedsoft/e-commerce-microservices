@@ -1,0 +1,10 @@
+services:
+  gateway:
+    image: ${REGISTRY:?Set REGISTRY}/ecommerce-gateway:${VERSION:-v1.0.0}
+    build: !reset null
+  products:
+    image: ${REGISTRY:?Set REGISTRY}/ecommerce-products:${VERSION:-v1.0.0}
+    build: !reset null
+  orders:
+    image: ${REGISTRY:?Set REGISTRY}/ecommerce-orders:${VERSION:-v1.0.0}
+    build: !reset null

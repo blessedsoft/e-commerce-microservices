@@ -1,0 +1,13 @@
+services:
+  gateway:
+    command: ["node", "--watch", "src/server.js"]
+    volumes: [./services/gateway/src:/app/src:ro]
+    ports: ["3000:3000", "9229:9229"]
+  products:
+    command: ["node", "--watch", "src/server.js"]
+    volumes: [./services/products/src:/app/src:ro]
+    ports: ["3001:3001", "9230:9229"]
+  orders:
+    command: ["node", "--watch", "src/server.js"]
+    volumes: [./services/orders/src:/app/src:ro]
+    ports: ["3002:3002", "9231:9229"]
