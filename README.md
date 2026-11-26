@@ -125,19 +125,19 @@ docker buildx imagetools inspect docker.io/blessedsoft/ecommerce-orders:v1.0.0
 
 The application images build successfully, all Compose services report healthy, and the gateway/API endpoints respond successfully:
 
-![Docker image build](evidences/01-docker-build.png)
+![Docker image build](https://raw.githubusercontent.com/blessedsoft/e-commerce-microservices/main/evidences/01-docker-build.png)
 
 ## Successful multi-service Docker build
 
-![Healthy containers](evidences/02-healthy-containers.png)
+![Healthy containers](https://raw.githubusercontent.com/blessedsoft/e-commerce-microservices/main/evidences/02-healthy-containers.png)
 
 ## Gateway, products, orders, PostgreSQL, and Redis running with healthy status
 
-![Gateway health endpoint](evidences/03-gateway-health.png)
+![Gateway health endpoint](https://raw.githubusercontent.com/blessedsoft/e-commerce-microservices/main/evidences/03-gateway-health.png)
 
 ## Gateway health check returning HTTP 200
 
-![Products and orders API](evidences/04-products-and-orders-api.png)
+![Products and orders API](https://raw.githubusercontent.com/blessedsoft/e-commerce-microservices/main/evidences/04-products-and-orders-api.png)
 
 ## Products retrieval and order creation API responses
 
@@ -145,24 +145,24 @@ The application images build successfully, all Compose services report healthy, 
 
 The following evidence shows the local Docker image-size output and the published Docker Hub image pages. Local Docker sizes are unpacked sizes; Docker Hub reports compressed registry sizes.
 
-![Local image sizes](evidences/05-docker-image-local-unpacked-sizes.png)
+![Local image sizes](https://raw.githubusercontent.com/blessedsoft/e-commerce-microservices/main/evidences/05-docker-image-local-unpacked-sizes.png)
 
 ## Local unpacked image-size output
 
-![Orders image on Docker Hub](evidences/06-ecommerce-orders-image-size.png)
+![Orders image on Docker Hub](https://raw.githubusercontent.com/blessedsoft/e-commerce-microservices/main/evidences/06-ecommerce-orders-image-size.png)
 
 ## Published orders image and registry size
 
-![Gateway image on Docker Hub](evidences/07-ecommerce-gateway-image-size.png)
+![Gateway image on Docker Hub](https://raw.githubusercontent.com/blessedsoft/e-commerce-microservices/main/evidences/07-ecommerce-gateway-image-size.png)
 
 ## Published gateway image and registry size
 
-![Products image on Docker Hub](evidences/08-ecommerce-products-image-size.png)
+![Products image on Docker Hub](https://raw.githubusercontent.com/blessedsoft/e-commerce-microservices/main/evidences/08-ecommerce-products-image-size.png)
 
 ## Published products image and registry size
 
 ### Production deployment
 
-![Production deployment](evidences/09-production-deployment.png)
+![Production deployment](https://raw.githubusercontent.com/blessedsoft/e-commerce-microservices/main/evidences/09-production-deployment.png)
 
 ## Production Compose deployment using the `docker.io/blessedsoft` registry images and semantic `v1.0.0` tags
