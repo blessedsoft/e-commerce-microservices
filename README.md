@@ -15,6 +15,40 @@ flowchart LR
   Orders --> Redis
 ```
 
+```
+.
+├── .dockerignore
+├── .env
+├── .env.example
+├── .gitignore
+├── docker-compose.override.yml
+├── docker-compose.prod.yml
+├── docker-compose.yml
+├── package.json
+├── README.md
+└── services
+    ├── gateway
+    │   ├── .dockerignore
+    │   ├── Dockerfile
+    │   ├── package.json
+    │   └── src
+    │       └── server.js
+    │
+    ├── orders
+    │   ├── .dockerignore
+    │   ├── Dockerfile
+    │   ├── package.json
+    │   └── src
+    │       └── server.js
+    │
+    └── products
+        ├── .dockerignore
+        ├── Dockerfile
+        ├── package.json
+        └── src
+            └── server.js
+```
+
 ## Run locally
 
 Docker Compose reads `.env` if present. Start from the example without committing your real password:
@@ -62,9 +96,9 @@ The final sizes depend on the local Docker cache and image version. The report b
 
 | Image | Runtime base | Required maximum | Measured |
 |---|---|---:|---:|
-| `ecommerce-gateway` | `node:22-alpine` | 150 MB | run command below |
-| `ecommerce-products` | `node:22-alpine` | 150 MB | run command below |
-| `ecommerce-orders` | `node:22-alpine` | 150 MB | run command below |
+| `ecommerce-gateway` | `gcr.io/distroless/nodejs22-debian13:nonroot` | 150 MB | see evidence below |
+| `ecommerce-products` | `gcr.io/distroless/nodejs22-debian13:nonroot` | 150 MB | see evidence below |
+| `ecommerce-orders` | `gcr.io/distroless/nodejs22-debian13:nonroot` | 150 MB | see evidence below |
 
 ```sh
 docker compose build
@@ -83,3 +117,53 @@ docker buildx imagetools inspect docker.io/blessedsoft/ecommerce-gateway:v1.0.0
 docker buildx imagetools inspect docker.io/blessedsoft/ecommerce-products:v1.0.0
 docker buildx imagetools inspect docker.io/blessedsoft/ecommerce-orders:v1.0.0
 ```
+
+## Submission evidence
+
+The `evidences/` directory contains screenshots supporting the assignment requirements.
+
+### Build and runtime validation
+
+The application images build successfully, all Compose services report healthy, and the gateway/API endpoints respond successfully:
+
+![Docker image build](evidences/01-docker-build.png)
+
+*Figure 1: Successful multi-service Docker build.*
+
+![Healthy containers](evidences/02-healthy-containers.png)
+
+*Figure 2: Gateway, products, orders, PostgreSQL, and Redis running with healthy status.*
+
+![Gateway health endpoint](evidences/03-gateway-health.png)
+
+*Figure 3: Gateway health check returning HTTP 200.*
+
+![Products and orders API](evidences/04-products-and-orders-api.png)
+
+*Figure 4: Products retrieval and order creation API responses.*
+
+### Image size and registry evidence
+
+The following evidence shows the local Docker image-size output and the published Docker Hub image pages. Local Docker sizes are unpacked sizes; Docker Hub reports compressed registry sizes.
+
+![Local image sizes](evidences/05-docker-image-local-unpacked-sizes.png)
+
+*Figure 5: Local unpacked image-size output.*
+
+![Orders image on Docker Hub](evidences/06-ecommerce-orders-image-size.png)
+
+*Figure 6: Published orders image and registry size.*
+
+![Gateway image on Docker Hub](evidences/07-ecommerce-gateway-image-size.png)
+
+*Figure 7: Published gateway image and registry size.*
+
+![Products image on Docker Hub](evidences/08-ecommerce-products-image-size.png)
+
+*Figure 8: Published products image and registry size.*
+
+### Production deployment
+
+![Production deployment](evidences/09-production-deployment.png)
+
+*Figure 9: Production Compose deployment using the `docker.io/blessedsoft` registry images and semantic `v1.0.0` tags.*
