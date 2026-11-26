@@ -127,19 +127,19 @@ The application images build successfully, all Compose services report healthy, 
 
 ![Docker image build](evidences/01-docker-build.png)
 
-Successful multi-service Docker build
+## Successful multi-service Docker build
 
 ![Healthy containers](evidences/02-healthy-containers.png)
 
-*Figure 2: Gateway, products, orders, PostgreSQL, and Redis running with healthy status.*
+## Gateway, products, orders, PostgreSQL, and Redis running with healthy status
 
 ![Gateway health endpoint](evidences/03-gateway-health.png)
 
-*Figure 3: Gateway health check returning HTTP 200.*
+## Gateway health check returning HTTP 200
 
 ![Products and orders API](evidences/04-products-and-orders-api.png)
 
-*Figure 4: Products retrieval and order creation API responses.*
+## Products retrieval and order creation API responses
 
 ### Image size and registry evidence
 
@@ -147,22 +147,22 @@ The following evidence shows the local Docker image-size output and the publishe
 
 ![Local image sizes](evidences/05-docker-image-local-unpacked-sizes.png)
 
-*Figure 5: Local unpacked image-size output.*
+## Local unpacked image-size output
 
 ![Orders image on Docker Hub](evidences/06-ecommerce-orders-image-size.png)
 
-*Figure 6: Published orders image and registry size.*
+## Published orders image and registry size
 
 ![Gateway image on Docker Hub](evidences/07-ecommerce-gateway-image-size.png)
 
-*Figure 7: Published gateway image and registry size.*
+## Published gateway image and registry size
 
 ![Products image on Docker Hub](evidences/08-ecommerce-products-image-size.png)
 
-*Figure 8: Published products image and registry size.*
+## Published products image and registry size
 
 ### Production deployment
 
 ![Production deployment](evidences/09-production-deployment.png)
 
-*Figure 9: Production Compose deployment using the `docker.io/blessedsoft` registry images and semantic `v1.0.0` tags.*
+## Production Compose deployment using the `docker.io/blessedsoft` registry images and semantic `v1.0.0` tags
