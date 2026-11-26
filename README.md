@@ -104,23 +104,22 @@ The final sizes depend on the local Docker cache and image version. The report b
 docker compose build
 docker images --format 'table {{.Repository}}\t{{.Tag}}\t{{.Size}}' \
   | Select-String 'ecommerce-(gateway|products|orders)'
-```
-
+  ```
 The three application Dockerfiles use the official `gcr.io/distroless/nodejs22-debian13:nonroot` runtime. The build stages use Alpine only for dependency installation; the final images contain only production dependencies and application source. Distroless images do not include a shell or `wget`, so application health checks use the Node runtime directly.
 
 Docker Hub displays compressed layer sizes, while `docker images` displays local unpacked image sizes. Record both measurements when documenting the 150 MB requirement:
 
-```sh
-docker images --format 'table {{.Repository}}\t{{.Tag}}\t{{.Size}}' \
+  ```bash
+  docker images --format 'table {{.Repository}}\t{{.Tag}}\t{{.Size}}' \
   | Select-String 'ecommerce-(gateway|products|orders)'
+
 docker buildx imagetools inspect docker.io/blessedsoft/ecommerce-gateway:v1.0.0
 docker buildx imagetools inspect docker.io/blessedsoft/ecommerce-products:v1.0.0
 docker buildx imagetools inspect docker.io/blessedsoft/ecommerce-orders:v1.0.0
-```
+    ```
 
-## Submission evidence
+## Evidence
 
-The `evidences/` directory contains screenshots supporting the assignment requirements.
 
 ### Build and runtime validation
 
